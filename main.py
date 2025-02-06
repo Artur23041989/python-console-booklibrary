@@ -1,12 +1,15 @@
-from library import Book, Library, ConsoleInterface
+from library import Library, ConsoleInterface
+from db import CSVStorage
 
 
 def main():
-    library = Library()
-    console = ConsoleInterface()
+    csv_storage  = CSVStorage('books.csv')
+    library = Library(storage= csv_storage)
+    console = ConsoleInterface(source=library)
 
-    console.main_menu()
-    console.process_main_menu()
+    while True:
+        console.main_menu()
+
 
     # book_1 = Book(title='Капитанская дочка',
     #               author='А.С.Пушкин',
