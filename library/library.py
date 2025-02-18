@@ -32,27 +32,35 @@ class Library:
         raise ValueError("Такой книги нет")
 
     def get_book_by_isbn(self, isbn):
-        for id_, book in self.books.items():
-            if isbn == book.get("isbn"):
-                return id_, book
-        raise ValueError("Такой книги нет")
+        results = []
+        books = self.storage.read_data()
+        for item in books:
+            if isbn.lower() in item['ISBN'].lower():
+                results.append(Book.from_dict(item))
+        return results
 
     def get_books(self):
-        return self.books
+        books = self.storage.read_data()
+        books_obj = []
+        for book in books:
+            books_obj.append(Book.from_dict(book))
+        return books_obj
 
     def get_books_by_author(self, author: str):
-        books = {}
-        for id_, book in self.books.items():
-            if author.lower() in book.author.lower():
-                books[id_] = book
-        return books
+        results = []
+        books = self.storage.read_data()
+        for item in books:
+            if author.lower() in item['author'].lower():
+                results.append(Book.from_dict(item))
+        return results
 
     def get_books_by_title(self, title: str):
-        books = {}
-        for id_, book in self.books.items():
-            if title.lower() in book.title.lower():
-                books[id_] = book
-        return books
+        results = []
+        books = self.storage.read_data()
+        for item in books:
+            if title.lower() in item['title'].lower():
+                results.append(Book.from_dict(item))
+        return results
 
     def search_book(self, query):
         results = {}
@@ -61,12 +69,26 @@ class Library:
                 results[id_] = book
         return results
 
-    def book_delete(self, id_):
-        if id_.isdigit():
-            if int(id_) in self.books:
-                return self.books.pop(int(id_))
-        raise ValueError("Неверный или некорректный id")
+    def book_delete(self, isbn: str):
+        # получаем список словарей
+        books = self.storage.read_data()
+        # проходимся по списку словарей и
+        for i, book in enumerate(books):
+            # удаляем словарь
+            if book["ISBN"].lower() == isbn.lower():
+                books.pop(i)
+        self.storage.file.seek(33)
+        self.storage.file.truncate()
+        for book in books:
+            self.add_book(Book.from_dict(book))
 
     def get_book_count(self):
         pass
+
+    def check_book(self, isbn):
+        books = self.storage.read_data()
+        for item in books:
+            if item["ISBN"].lower() == isbn.lower():
+                return item["ISBN"]
+        return None
 

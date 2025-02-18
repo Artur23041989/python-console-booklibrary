@@ -74,7 +74,6 @@ class Book:
         else:
             raise ValueError('Неверное значение для года издания!')
 
-
     @property
     def genre(self):
         return self._genre
@@ -85,6 +84,14 @@ class Book:
             self._genre = genre
         else:
             raise ValueError("Неизвестный жанр")
+
+    @property
+    def isbn(self):
+        return self.__isbn
+
+    @isbn.setter
+    def isbn(self, isbn):
+        self.__isbn = isbn
 
     def get_book_age(self):
         current_year = datetime.today().year
@@ -100,6 +107,17 @@ class Book:
                 }
         return data
 
+    @classmethod
+    def from_dict(cls, book_data):
+        book = Book(
+            author=book_data["author"],
+            title=book_data["title"],
+            year=book_data["year"],
+            genre=book_data["genre"]
+        )
+        book.isbn = book_data["ISBN"]
+        book.id = book_data["id"]
+        return book
 
 
 
