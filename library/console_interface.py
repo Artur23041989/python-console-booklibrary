@@ -13,6 +13,7 @@ class ConsoleInterface:
         print("2. Добавить книгу")
         print("3. Поиск книг")
         print("4. Удалить книгу")
+        print("5. Сохранить книги")
         print("0. Выйти")
 
         self.process_main_menu()
@@ -28,6 +29,8 @@ class ConsoleInterface:
                 self.search_book()
             case "4":
                 self.delete_book()
+            case "5":
+                self.save_books()
             case "0":
                 sys.exit()
             case _:
@@ -111,6 +114,18 @@ class ConsoleInterface:
         else:
             print("Такой книги нет!")
         self.footer_menu()
+
+    def save_books(self):
+        filename = input("Введите имя файла: ")
+        try:
+            self.library.dump_books_data(filename)
+            print(f"Данные книг успешно сохранены в файл {filename}.json")
+        except Exception as e:
+            print('Операция завершена не удачно')
+            print(e)
+        finally:
+            self.footer_menu()
+
 
     def footer_menu(self):
         print("Введите 1 для возврата в главное меню")

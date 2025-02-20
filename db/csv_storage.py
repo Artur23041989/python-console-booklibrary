@@ -1,5 +1,6 @@
 import csv
 import os
+import json
 
 
 
@@ -36,5 +37,15 @@ class CSVStorage:
         self.file.seek(0)
         reader = csv.DictReader(self.file)
         return list(reader)
+
+    def dump_books_to_json(self, filename):
+        books = self.read_data()
+        data = {}
+        for book in books:
+            data[book.pop("id")] = book
+        with open (f"{filename}.json", 'w', encoding="utf-8") as file:
+            json.dump(data, file, indent=2, ensure_ascii=False)
+
+
 
 
