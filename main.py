@@ -6,7 +6,6 @@ def main():
     csv_storage  = CSVStorage('books.csv')
     library = Library(storage= csv_storage)
     console = ConsoleInterface(source=library)
-
     while True:
         console.main_menu()
 
@@ -50,8 +49,5 @@ def main():
     # books = library.get_books()
     # for id_, book in books.items():
     #     print(f'{id_}.{book.get_info()}')
-
-
-
 if __name__== '__main__':
     main()

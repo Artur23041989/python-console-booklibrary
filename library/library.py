@@ -4,24 +4,28 @@ from . import Book
 
 class Library:
     def __init__(self, storage):
-        self.books = {}
-        self.storage = storage
-        self.last_id = None
+        self.books = {}           # создаем пустой словарь 'books'
+        self.storage = storage    # хранилище
+        self.last_id = None       # 'None' потому что при инициализации мы не указываем 'id'
 
     def _get_last_id_book(self):
-        last_id = self.storage.get_last_id()
-        return last_id
+        last_id = self.storage.get_last_id() # вызывается метод получения последнего 'id' из хранилища
+        return last_id                       # и возвращается
 
+
+    # данный метод увеличивает 'id' последней книги в хранилище
     def increment_book_id(self):
-        self.last_id = int(self._get_last_id_book())
-        self.last_id += 1
-        self.storage.increment_last_id()
+        self.last_id = int(self._get_last_id_book()) # получается сначала последний 'id'
+        self.last_id += 1                            # потом он увеличивается для внутренней работы класса если программа не закрывается
+        self.storage.increment_last_id()             # и увеличивается одновременно в хранилище
 
+
+    # данный метод добавляет в библиотеку книгу
     def add_book(self, book: Book):
-        if isinstance(book, Book):
-            self.increment_book_id()
-            book.id = str(self.last_id)
-            self.storage.write_data(book.to_dict())
+        if isinstance(book, Book):                   # если книга является книгой
+            self.increment_book_id()                 # вызываем метод 'self.increment_book_id()' получение увеличения последнего 'id'
+            book.id = str(self.last_id)              # заносим в объект 'book' атрибут 'id' и 'str(self.last_id)'
+            self.storage.write_data(book.to_dict())  # вызываем метод записи 'storage.write_data(book.to_dict())'
             return book
         raise ValueError("Неверный формат книги!")
 

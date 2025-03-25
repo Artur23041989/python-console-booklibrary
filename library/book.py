@@ -3,9 +3,7 @@ import uuid
 from core.enums import GENRES
 
 
-
 class Book:
-
     def __init__(self, title, author, year, genre):
         """
         Конструктор класса Book
@@ -32,8 +30,8 @@ class Book:
             info += f", Жанр: {self.genre}"
 
         info += f", ISBN: {self.__isbn}"
-
         return info
+
     @staticmethod
     def is_valid_year(year):
         if isinstance(year, int):
@@ -97,7 +95,7 @@ class Book:
         current_year = datetime.today().year
         return current_year - self._year
 
-    def to_dict(self):
+    def to_dict(self): # возвращает объект в виде словаря
         data = {"id": self.id,
                 "author": self.author,
                 "title": self.title,

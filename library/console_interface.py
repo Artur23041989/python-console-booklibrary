@@ -15,7 +15,6 @@ class ConsoleInterface:
         print("4. Удалить книгу")
         print("5. Сохранить книги")
         print("0. Выйти")
-
         self.process_main_menu()
 
     def process_main_menu(self):
@@ -40,7 +39,6 @@ class ConsoleInterface:
     def show_books_info(books):
         for book in books:
             print(book.get_info())
-
 
     def show_books(self):
         books = self.library.get_books()
@@ -125,7 +123,6 @@ class ConsoleInterface:
             print(e)
         finally:
             self.footer_menu()
-
 
     def footer_menu(self):
         print("Введите 1 для возврата в главное меню")
