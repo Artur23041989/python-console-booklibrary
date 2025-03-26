@@ -105,17 +105,19 @@ class Book:
                 }
         return data
 
+
+    # МЕТОД, КОТОРЫЙ ДЕЛАЕТ ИЗ СЛОВАРЯ ОБЪЕКТ КНИГИ
     @classmethod
     def from_dict(cls, book_data):
-        book = Book(
+        book = Book( # создаем объект книги из словаря
             author=book_data["author"],
             title=book_data["title"],
             year=book_data["year"],
             genre=book_data["genre"]
         )
-        book.isbn = book_data["ISBN"]
-        book.id = book_data["id"]
-        return book
+        book.isbn = book_data["ISBN"] # потому что это приватный атрибут
+        book.id = book_data["id"]     # делаем так, потому что 'id' нет параметрах конструктора
+        return book # возвращает книгу
 
 
 

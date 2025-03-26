@@ -40,8 +40,9 @@ class ConsoleInterface:
         for book in books:
             print(book.get_info())
 
+    # 3 слой данных
     def show_books(self):
-        books = self.library.get_books()
+        books = self.library.get_books() # получаем список словарей и сохраняем в 'books'
         self.show_books_info(books)
         self.footer_menu()
 

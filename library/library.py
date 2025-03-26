@@ -13,14 +13,14 @@ class Library:
         return last_id                       # и возвращается
 
 
-    # данный метод увеличивает 'id' последней книги в хранилище
+    # МЕТОД УВЕЛИЧЕНИЯ 'id' ПОСЛЕДНЕЙ КНИГИ В ХРАНИЛИЩЕ
     def increment_book_id(self):
         self.last_id = int(self._get_last_id_book()) # получается сначала последний 'id'
         self.last_id += 1                            # потом он увеличивается для внутренней работы класса если программа не закрывается
         self.storage.increment_last_id()             # и увеличивается одновременно в хранилище
 
 
-    # данный метод добавляет в библиотеку книгу
+    # МЕТОД ДОБАВЛЕНИЯ КНИГИ В БИБЛИОТЕКУ
     def add_book(self, book: Book):
         if isinstance(book, Book):                   # если книга является книгой
             self.increment_book_id()                 # вызываем метод 'self.increment_book_id()' получение увеличения последнего 'id'
@@ -43,8 +43,9 @@ class Library:
                 results.append(Book.from_dict(item))
         return results
 
+    # 2 слой данных
     def get_books(self):
-        books = self.storage.read_data()
+        books = self.storage.read_data() # получаем список словарей и cохраняем в 'books'
         books_obj = []
         for book in books:
             books_obj.append(Book.from_dict(book))
