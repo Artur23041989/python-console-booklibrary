@@ -38,7 +38,7 @@ class ConsoleInterface:
     @staticmethod
     def show_books_info(books):
         for book in books:
-            print(book.get_info())
+            print(book.get_info()) # покажи информацию о книги
 
     # 3 слой данных
     def show_books(self):
@@ -63,6 +63,7 @@ class ConsoleInterface:
             self.add_book()
         self.footer_menu()
 
+    # МЕТОД ПОИСКА КНИГИ
     def search_book(self):
         print("Поиск книги")
         self.process_search_book()
@@ -80,7 +81,7 @@ class ConsoleInterface:
             case "31":
                 author = input("Введите автора: ")
                 books = self.library.get_books_by_author(author)
-                if books:
+                if books:                        # если есть книги то
                     self.show_books_info(books)
                 else:
                     print("По вашему запросу книг не найдено!")

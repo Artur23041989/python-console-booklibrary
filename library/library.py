@@ -39,24 +39,24 @@ class Library:
         results = []
         books = self.storage.read_data()
         for item in books:
-            if isbn.lower() in item['ISBN'].lower():
+            if isbn.lower() in item['ISBN'].lower(): # если подстрока 'isbn.lower()' содержится в строке 'item['ISBN']'
                 results.append(Book.from_dict(item))
         return results
 
     # 2 слой данных
     def get_books(self):
         books = self.storage.read_data() # получаем список словарей и cохраняем в 'books'
-        books_obj = []
-        for book in books:
-            books_obj.append(Book.from_dict(book))
+        books_obj = []                   # будущий список книг, который будет получен из словарей
+        for book in books:               # проходимся по каждому словарю из словарей
+            books_obj.append(Book.from_dict(book)) # добавляем в список книг, именно объекта, объект книги
         return books_obj
 
     def get_books_by_author(self, author: str):
         results = []
-        books = self.storage.read_data()
-        for item in books:
-            if author.lower() in item['author'].lower():
-                results.append(Book.from_dict(item))
+        books = self.storage.read_data()  # получаем список словарей 'storage.read_data()'
+        for item in books:                # для каждого словаря из словарей, которые мы получили
+            if author.lower() in item['author'].lower(): # если автор, которого мы передали в параметре, содержится в словаре 'item'
+                results.append(Book.from_dict(item))     # то тогда в результат добавлем книгу
         return results
 
     def get_books_by_title(self, title: str):
@@ -75,10 +75,8 @@ class Library:
         return results
 
     def book_delete(self, isbn: str):
-        # получаем список словарей
-        books = self.storage.read_data()
-        # проходимся по списку словарей и
-        for i, book in enumerate(books):
+        books = self.storage.read_data() # получаем список словарей (получаем все книги)
+        for i, book in enumerate(books): # проходимся по списку словарей и
             # удаляем словарь
             if book["ISBN"].lower() == isbn.lower():
                 books.pop(i)
@@ -91,7 +89,7 @@ class Library:
         pass
 
     def check_book(self, isbn):
-        books = self.storage.read_data()
+        books = self.storage.read_data() # получаем книги
         for item in books:
             if item["ISBN"].lower() == isbn.lower():
                 return item["ISBN"]
