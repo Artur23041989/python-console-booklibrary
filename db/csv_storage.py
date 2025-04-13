@@ -49,11 +49,13 @@ class CSVStorage:
     def dump_books_to_json(self, filename):
         books = self.read_data()
         data = {}
-        for book in books:
+        for book in books:          # для каждого словаря книги из всех книг
             data[book.pop("id")] = book
         with open (f"{filename}.json", 'w', encoding="utf-8") as file:
             json.dump(data, file, indent=2, ensure_ascii=False)
 
-
+    def count_books(self):
+        books = self.read_data()
+        return len(books)
 
 

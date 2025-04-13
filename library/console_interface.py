@@ -14,6 +14,7 @@ class ConsoleInterface:
         print("3. Поиск книг")
         print("4. Удалить книгу")
         print("5. Сохранить книги")
+        print("6. Показать количество книг")
         print("0. Выйти")
         self.process_main_menu()
 
@@ -30,6 +31,8 @@ class ConsoleInterface:
                 self.delete_book()
             case "5":
                 self.save_books()
+            case "6":
+                self.show_count()
             case "0":
                 sys.exit()
             case _:
@@ -139,3 +142,7 @@ class ConsoleInterface:
                 print("Выберите необходимое действие")
                 self.footer_menu()
 
+    def show_count(self):
+        count = self.library.get_book_count()
+        print(f"Количество книг в библиотеке - {count}")
+        self.footer_menu()

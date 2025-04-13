@@ -77,16 +77,18 @@ class Library:
     def book_delete(self, isbn: str):
         books = self.storage.read_data() # получаем список словарей (получаем все книги)
         for i, book in enumerate(books): # проходимся по списку словарей и
-            # удаляем словарь
+            # удаляем словарь с нужным isbn
             if book["ISBN"].lower() == isbn.lower():
                 books.pop(i)
+        # очищаем файл (начиная с конца хедера (33))
         self.storage.file.seek(33)
         self.storage.file.truncate()
-        for book in books:
-            self.add_book(Book.from_dict(book))
+        for book in books: # добавляем заново книги из словаря в файл
+            self.add_book(Book.from_dict(book)) # перед этим преобразуя в объект Book
 
     def get_book_count(self):
-        pass
+        count = self.storage.count_books()
+        return count
 
     def check_book(self, isbn):
         books = self.storage.read_data() # получаем книги
