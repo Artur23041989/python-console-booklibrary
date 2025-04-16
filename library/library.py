@@ -29,11 +29,14 @@ class Library:
             return book
         raise ValueError("Неверный формат книги!")
 
+    # Поиск книги по id
     def get_book_by_id(self, book_id):
-        book = self.books.get(book_id)
-        if book:
-            return book
-        raise ValueError("Такой книги нет")
+        results = []
+        books = self.storage.read_data()
+        for item in books:
+            if book_id.lower() == item['id'].lower():
+                results.append(Book.from_dict(item))
+        return results
 
     def get_book_by_isbn(self, isbn):
         results = []
@@ -67,12 +70,29 @@ class Library:
                 results.append(Book.from_dict(item))
         return results
 
+    # поиск книг по автору и названию одновременно
     def search_book(self, query):
         results = {}
         for id_, book in self.books.items():
             if query.lower() in book.author.lower():
                 results[id_] = book
+            elif query.lower() in book.title.lower():
+                results[id_] = book
         return results
+
+    # метод выдачи книг по годам
+    def get_books_from_years(self, start_year, end_year):
+        if start_year.isdigit() and end_year.isdigit():
+            if start_year < end_year: # если год начала поиска меньше года окончания поиска то
+                start = int(start_year)
+                end = int(end_year)
+                results = {}
+                for id_, book in self.books.items():
+                    if start <= book.year <= end:
+                        results[id_] = book
+                    return results
+            raise ValueError('Год начала поиска должен быть меньше года окончания поиска!')
+        raise ValueError('Год должен быть числом!')
 
     def book_delete(self, isbn: str):
         books = self.storage.read_data() # получаем список словарей (получаем все книги)

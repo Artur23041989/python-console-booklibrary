@@ -75,7 +75,8 @@ class ConsoleInterface:
     def process_search_book(self):
         text = ("31. Поиск по автору\n"
                 "32. Поиск по названию\n"
-                "33. Поиск по ISBN")
+                "33. Поиск по ISBN\n"
+                "34. Поиск по id")
         print(text)
         print("Введите 1 для возврата в главное меню")
         print("Введите 0 для выхода из программы")
@@ -100,6 +101,13 @@ class ConsoleInterface:
                 books = self.library.get_book_by_isbn(isbn)
                 if books:
                     self.show_books_info(books)
+                else:
+                    print("По вашему запросу книг не найдено!")
+            case "34":
+                id_ = input('Введите id книги: ')
+                book = self.library.get_book_by_id(id_)
+                if book:
+                    self.show_books_info(book)
                 else:
                     print("По вашему запросу книг не найдено!")
             case "1":
